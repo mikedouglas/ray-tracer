@@ -1,22 +1,22 @@
 require 'rake/clean'
 
-CLEAN.include('*.o')
-CLEAN.include('tests')
+CLEAN.include('src/*.o')
+CLEAN.include('bin/tests')
 
-TESTS = FileList['*_test.cc']
-SRC = FileList['*.cc'] - TESTS
+TESTS = FileList['tests/*_test.cc']
+SRC = FileList['src/*.cc']
 HDRS = FileList['*.h']
+T_OBJ = TESTS.ext('o')
 OBJ = SRC.ext('o')
 LIB = "-L /usr/X11/lib -L vendor"
 
 rule '.o' => ['.cc'] do |t|
-  sh "clang++ -I /usr/X11/include #{t.source} -c -o #{t.name}"
+  sh "clang++ -F ./vendor -I /usr/X11/include #{t.source} -I ./src -c -o #{t.name}"
 end
 
-file 'tests' => OBJ do
-  sh "clang++ -F ./vendor vec3_test.cc -c -o vec3_test.o"
+file 'tests' => OBJ + T_OBJ do
   sh "clang++ -F ./vendor -framework gtest " + LIB +
-    " -o tests vec3_test.o " + (OBJ - ['main.o']).join(" ")
+    " -o bin/tests " + (OBJ + T_OBJ - ['src/main.o']).join(" ")
 end
 
 task :default => OBJ
