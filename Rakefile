@@ -1,6 +1,7 @@
 require 'rake/clean'
 
 CLEAN.include('src/*.o')
+CLEAN.include('tests/*.o')
 CLEAN.include('bin/tests')
 CLEAN.include('test.png')
 
