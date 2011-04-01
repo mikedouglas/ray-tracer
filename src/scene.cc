@@ -42,8 +42,8 @@ Color Scene::shade(Shape *s, const Ray &ray, const Ray &nrm) {
   for (int i = 0; i < n_lights; i++) {
     Light *light = lights[i];
     Ray to_light = light->to_light(nrm.origin);
-    double diffuse = dot(nrm.dir, to_light.dir);
 
+    double diffuse = dot(nrm.dir, to_light.dir);
     if (diffuse > 0.0) {
       double brightness = testShadow(s, light, to_light);
       diffuse *= brightness;
@@ -81,6 +81,17 @@ Color Scene::trace(const Ray &ray) {
   return trace_avoid(ray, NULL);
 }
 
+#define FAR_AWAY -500.0
+Color checkerboard(const Ray &ray) {
+  if (ray.dir.z > 0) return Color(0,0,0);
+
+  Point intersect = ray.origin + ray.dir*(FAR_AWAY/ray.dir.z);
+  if ((((int)intersect.x/15) + ((int)intersect.y/15)) % 2)
+    return Color(50,50,50);
+  else
+    return Color(255,255,255);
+}
+
 // terrible hack, need to sometimes avoid a shape,
 // and C++'s default arguments aren't cooperating
 Color Scene::trace_avoid(const Ray &ray, Shape *s) {
@@ -96,7 +107,7 @@ Color Scene::trace_avoid(const Ray &ray, Shape *s) {
   }
 
   if (!closest)
-    return Color(0,0,0); // TODO: allow custom background colors
+    return checkerboard(ray);
   
   Point at = ray.origin + min_t*ray.dir;
   return shade(closest, ray, Ray(at, closest->normal(at)));

@@ -14,22 +14,20 @@ Surface *Sphere::getSurface() {
 }
 
 double Sphere::intersect(const Ray &ray) {
-    double xadj = ray.origin.x - pos.x;
-    double yadj = ray.origin.y - pos.y;
-    double zadj = ray.origin.z - pos.z;
+  Vector adj = ray.origin - pos;
+  
+  double b = adj.x*ray.dir.x + adj.y*ray.dir.y + adj.z*ray.dir.z;
+  double t = b*b - adj.x*adj.x - adj.y*adj.y - adj.z*adj.z + r*r;
     
-    double b = xadj*ray.dir.x + yadj*ray.dir.y + zadj*ray.dir.z;
-    double t = b*b - xadj*xadj - yadj*yadj - zadj*zadj + r*r;
-    
-    if (t < 0)
-        return 0;
-    double s = -b - sqrt(t);
+  if (t < 0)
+    return 0;
+  double s = -b - sqrt(t);
+  if (s > 0)
+    return s;
+  else {
+    s = -b + sqrt(t);
     if (s > 0)
-        return s;
-    else {
-        s = -b + sqrt(t);
-        if (s > 0)
-           return s;
-        return 0;
-    }
+      return s;
+    return 0;
+  }
 }
