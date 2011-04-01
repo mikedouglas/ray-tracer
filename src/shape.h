@@ -6,10 +6,9 @@
 
 class Shape {
 public:
-    const Surface *surface;
-
     virtual double intersect(const Ray &ray) = 0;
     virtual Vector normal(const Point &point) = 0;
+    virtual Surface *getSurface() = 0;
 };
 
 #endif

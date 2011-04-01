@@ -18,6 +18,7 @@ public:
     create_image(width, height);
   }
   void write_png(char *fname);
+  void setColor(int x, int y, Color c);
 };
 
 #endif

@@ -63,3 +63,7 @@ void Image::write_png(char *fname) {
   fclose(fp);
   free(row);
 }
+
+void Image::setColor(int x, int y, Color c) {
+  image[x*width + y] = c;
+}

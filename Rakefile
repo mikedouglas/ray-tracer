@@ -13,11 +13,11 @@ OBJ = SRC.ext('o')
 LIB = "-L /usr/X11/lib -L vendor -lpng"
 
 rule '.o' => ['.cc'] do |t|
-  sh "clang++ -F ./vendor -I /usr/X11/include #{t.source} -I ./src -c -o #{t.name}"
+  sh "clang++ -g -F ./vendor -I /usr/X11/include #{t.source} -I ./src -c -o #{t.name}"
 end
 
 file 'tests' => OBJ + T_OBJ do
-  sh "clang++ -F ./vendor -framework gtest " + LIB +
+  sh "clang++ -g -F ./vendor -framework gtest " + LIB +
     " -o bin/tests " + (OBJ + T_OBJ - ['src/main.o']).join(" ")
 end
 

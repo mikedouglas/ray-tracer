@@ -10,7 +10,8 @@ public:
     const double refl; // reflection [0,1]
     const double transp; // transparency [0,1]
     
-    Surface(Color color, double s_coef, double refl, double transp) : color(color), s_coef(s_coef), refl(refl), transp(transp) {}
+    Surface(Color color, double s_coef, double refl, double transp)
+     : color(color), s_coef(s_coef), refl(refl), transp(transp) {}
 };
 
 #endif

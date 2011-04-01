@@ -1,10 +1,16 @@
 #include <cmath>
+#include "shape.h"
 #include "sphere.h"
+#include "surface.h"
 #include "vec3.h"
 
 Vector Sphere::normal(const Point &point) {
     Vector nrm(point.x - pos.x, point.y - pos.y, point.z - pos.z);
     return nrm/r;
+}
+
+Surface *Sphere::getSurface() {
+  return surface;
 }
 
 double Sphere::intersect(const Ray &ray) {
