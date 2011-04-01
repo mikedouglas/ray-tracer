@@ -17,11 +17,13 @@ class Scene {
     
 public:
   Scene(Point eye) : eye(eye), n_shapes(0), n_lights(0) {}
-  Color shade(const Ray &ray, const Ray &nrm, const Surface *sur);
+  Color shade(Shape *s, const Ray &ray, const Ray &nrm);
   Color trace(const Ray &ray);
   Image *render();
   void addShape(Shape *s);
   void addLight(Light *l);
+private:
+  double testShadow(Shape *s, Light *l, Ray lightray);
 };
 
 #endif

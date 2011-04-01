@@ -11,6 +11,7 @@ class Light {
     
     Light(Point pos, Color color, double brightness) : pos(pos), color(color), brightness(brightness) {}
     Ray to_light(const Point &p);
+    double distance(const Point &p);
 };
 
 #endif

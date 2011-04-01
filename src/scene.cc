@@ -17,8 +17,22 @@ void Scene::addShape(Shape *s) {
         shapes[n_shapes++] = s;
 }
 
-Color Scene::shade(const Ray &ray, const Ray &nrm, const Surface *sur) {
-  Color c = sur->color;
+double Scene::testShadow(Shape *s, Light *l, Ray lightray) {
+  double dist_light = l->distance(lightray.origin);
+
+  for (int i = 0; i < n_shapes; i++) {
+    if (shapes[i] != s) {
+      double dist = shapes[i]->intersect(lightray);
+      if (dist > 0 && dist < dist_light)
+        return 0;
+    }
+  }
+
+  return l->brightness;
+}
+
+Color Scene::shade(Shape *s, const Ray &ray, const Ray &nrm) {
+  Color c = s->getSurface()->color;
   double k = -2 * dot(ray.dir, nrm.dir);
   Ray refl(nrm.origin, k*nrm.dir + ray.dir);
 
@@ -28,12 +42,13 @@ Color Scene::shade(const Ray &ray, const Ray &nrm, const Surface *sur) {
     double diffuse = dot(nrm.dir, to_light.dir);
 
     if (diffuse > 0.0) {
-      diffuse *= light->brightness;
+      double brightness = testShadow(s, light, to_light);
+      diffuse *= brightness;
       c = c + light->color*diffuse;
 
       double spec = dot(refl.dir, to_light.dir);
       if (spec > 0.0) {
-        spec = light->brightness * pow(spec, sur->s_coef);
+        spec = brightness * pow(spec, s->getSurface()->s_coef);
         c = c + light->color*spec;
       }
     }
@@ -58,7 +73,7 @@ Color Scene::trace(const Ray &ray) {
     return Color(0,0,0); // TODO: allow custom background colors
   
   Point at = ray.origin + min_t*ray.dir;
-  return shade(ray, Ray(at, closest->normal(at)), closest->getSurface());
+  return shade(closest, ray, Ray(at, closest->normal(at)));
 }
 
 Image *Scene::render() {
