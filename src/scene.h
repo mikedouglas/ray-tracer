@@ -19,6 +19,7 @@ public:
   Scene(Point eye) : eye(eye), n_shapes(0), n_lights(0) {}
   Color shade(Shape *s, const Ray &ray, const Ray &nrm);
   Color trace(const Ray &ray);
+  Color trace_avoid(const Ray &ray, Shape *s);
   Image *render();
   void addShape(Shape *s);
   void addLight(Light *l);

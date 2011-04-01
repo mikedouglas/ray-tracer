@@ -24,12 +24,15 @@ double Scene::testShadow(Shape *s, Light *l, Ray lightray) {
     if (shapes[i] != s) {
       double dist = shapes[i]->intersect(lightray);
       if (dist > 0 && dist < dist_light)
-        return 0;
+        return 0; // if it's in the shadows
     }
   }
 
   return l->brightness;
 }
+
+int inception = 0;
+#define MAX_INCEPTION 5
 
 Color Scene::shade(Shape *s, const Ray &ray, const Ray &nrm) {
   Color c = s->getSurface()->color;
@@ -54,16 +57,39 @@ Color Scene::shade(Shape *s, const Ray &ray, const Ray &nrm) {
     }
   }
 
+  // calculate reflection off other objects, but don't go too deep
+  double reflk = s->getSurface()->refl;
+  if (reflk > 0 && inception < MAX_INCEPTION) {
+    inception++;
+    Color refl_c = trace_avoid(refl, s);
+    c = c + refl_c * reflk;
+    inception--;
+  }
+
+  // calculate colors for transparent objects
+  double transk = s->getSurface()->transp;
+  if (transk > 0) {
+    c = (1-transk) * c;
+    Color trans_c = trace_avoid(ray, s);
+    c = c + trans_c * transk; 
+  }
+
   return c;
 }
 
 Color Scene::trace(const Ray &ray) {
+  return trace_avoid(ray, NULL);
+}
+
+// terrible hack, need to sometimes avoid a shape,
+// and C++'s default arguments aren't cooperating
+Color Scene::trace_avoid(const Ray &ray, Shape *s) {
   double t, min_t = 0;
   Shape *closest = NULL;
     
   for (int i = 0; i < n_shapes; i++) {
     t = shapes[i]->intersect(ray);
-    if (t > 0 && (!closest || t < min_t)) {
+    if (t > 0 && (!s || s != shapes[i]) && (!closest || t < min_t)) {
       closest = shapes[i];
       min_t = t;
     }

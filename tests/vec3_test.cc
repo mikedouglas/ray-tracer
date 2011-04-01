@@ -67,12 +67,13 @@ TEST(scene, intersect) {
 
 TEST(image, empty_write) {
   Scene scene(Point(200, 200, 1000));
-  Surface surr(Color(255,0,0), 3, 0, 0);
-  Surface surb(Color(0, 0, 255), 5, 0, 0);
+  Surface surr(Color(255,0,0), 3, 0.4, 0);
+  Surface surb(Color(0, 0, 255), 5, 0.8, 0);
+  Surface surb2(Color(0, 0, 255), 5, 0, 0.3);
   Surface surg(Color(0,255,0), 8, 0, 0);
   scene.addShape(new Sphere(&surr, 50, 90, 320, 100));
-  scene.addShape(new Sphere(&surb, 20, 330, 175, 85));
-  scene.addShape(new Sphere(&surb, 40, 400, 120, 0));
+  scene.addShape(new Sphere(&surb2, 20, 360, 165, 85));
+  scene.addShape(new Sphere(&surr, 40, 400, 120, 0));
   scene.addShape(new Sphere(&surg, 30, 360, 400, 50));
   Light l(Point(200,200,200), Color(255,219,88), 0.5);
   scene.addLight(&l);
