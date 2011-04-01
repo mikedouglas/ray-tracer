@@ -4,8 +4,13 @@ CLEAN.include('src/*.o')
 CLEAN.include('tests/*.o')
 CLEAN.include('bin/tests')
 CLEAN.include('test.png')
+CLEAN.include('bin/example')
 
-CC = "clang++"
+if RUBY_PLATFORM == "universal-darwin10.0"
+  CC = "clang++"
+else
+  CC = "g++"
+end
 TESTS = FileList['tests/*_test.cc']
 SRC = FileList['src/*.cc']
 HDRS = FileList['*.h']
@@ -26,5 +31,5 @@ file 'example' => OBJ do
   sh CC + " " + LIB + " -o bin/example " + OBJ.join(" ")
 end
 
-task :default => OBJ
+task :default => 'example'
 task :test => 'tests'

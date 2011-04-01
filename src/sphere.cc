@@ -5,8 +5,8 @@
 #include "vec3.h"
 
 Vector Sphere::normal(const Point &point) {
-    Vector nrm(point.x - pos.x, point.y - pos.y, point.z - pos.z);
-    return nrm/r;
+  Vector nrm(point.x - pos.x, point.y - pos.y, point.z - pos.z);
+  return nrm/r;
 }
 
 Surface *Sphere::getSurface() {

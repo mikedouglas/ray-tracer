@@ -2,7 +2,7 @@
 #define VEC3_H
 
 class Vec3 {
-public:
+ public:
   Vec3() : x(0), y(0), z(0) {}
   Vec3(double x2, double y2, double z2) : x(x2), y(y2), z(z2) {}
   union {
@@ -27,7 +27,7 @@ typedef Vec3 Point;
 typedef Vec3 Vector;
 
 class Ray {
-public:
+ public:
   const Point origin;
   const Vector dir;
     

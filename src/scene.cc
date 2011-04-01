@@ -8,13 +8,13 @@
 #include <cassert>
 
 void Scene::addLight(Light *l) {
-    if (n_lights < MAX_LIGHTS)
-        lights[n_lights++] = l;
+  if (n_lights < MAX_LIGHTS)
+    lights[n_lights++] = l;
 }
 
 void Scene::addShape(Shape *s) {
-    if (n_shapes < MAX_SHAPES)
-        shapes[n_shapes++] = s;
+  if (n_shapes < MAX_SHAPES)
+    shapes[n_shapes++] = s;
 }
 
 double Scene::testShadow(Shape *s, Light *l, Ray lightray) {

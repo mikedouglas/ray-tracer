@@ -39,7 +39,7 @@ void Image::create_image(int width, int height) {
   info_ptr = png_create_info_struct(png_ptr);
 }
 
-void Image::write_png(char *fname) {
+void Image::write_png(char const *fname) {
   FILE *fp = fopen(fname, "wb");
 
   png_init_io(png_ptr, fp);

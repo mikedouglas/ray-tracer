@@ -5,10 +5,10 @@
 #include "surface.h"
 
 class Shape {
-public:
-    virtual double intersect(const Ray &ray) = 0;
-    virtual Vector normal(const Point &point) = 0;
-    virtual Surface *getSurface() = 0;
+ public:
+  virtual double intersect(const Ray &ray) = 0;
+  virtual Vector normal(const Point &point) = 0;
+  virtual Surface *getSurface() = 0;
 };
 
 #endif
