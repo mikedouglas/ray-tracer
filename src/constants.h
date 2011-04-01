@@ -9,4 +9,6 @@
 
 #define NULL 0
 
+#define GAMMA 1.8
+
 #endif

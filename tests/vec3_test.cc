@@ -1,6 +1,7 @@
 #include "constants.h"
 #include "vec3.h"
 #include "sphere.h"
+#include "image.h"
 #include <gtest/gtest.h>
 
 TEST(vec3, equality) {
@@ -40,6 +41,11 @@ TEST(sphere, normal) {
     ASSERT_EQ(Vec3(0, 1, 0), a.normal(Vec3(0, 1, 0)));
     Sphere b(NULL, 1, 1, 0, 0);
     ASSERT_EQ(Vec3(-1, 0, 0), b.normal(Vec3(0, 0, 0)));
+}
+
+TEST(image, empty_write) {
+  Image img(250, 250);
+  img.write_png("test.png");
 }
 
 int main(int argc, char **argv) {

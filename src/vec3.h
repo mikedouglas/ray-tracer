@@ -3,12 +3,13 @@
 
 class Vec3 {
 public:
-    Vec3(double x2, double y2, double z2) : x(x2), y(y2), z(z2) {}
-    union {
-        struct { double x, y, z; };
-        struct { double r, g, b; };
-    };
-    Vec3 normalize();
+  Vec3() : x(0), y(0), z(0) {}
+  Vec3(double x2, double y2, double z2) : x(x2), y(y2), z(z2) {}
+  union {
+    struct { double x, y, z; };
+    struct { double r, g, b; };
+  };
+  Vec3 normalize();
 };
 
 Vec3 operator+(const Vec3 &a, const Vec3 &b);
@@ -26,10 +27,10 @@ typedef Vec3 Vector;
 
 class Ray {
 public:
-    const Point origin;
-    const Vector dir;
+  const Point origin;
+  const Vector dir;
     
-    Ray(const Point &o, const Vector &d) : origin(o), dir(d) {}
+  Ray(const Point &o, const Vector &d) : origin(o), dir(d) {}
 };
 
 #endif
