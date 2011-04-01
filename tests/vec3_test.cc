@@ -66,9 +66,11 @@ TEST(scene, intersect) {
 }
 
 TEST(image, empty_write) {
-  Scene scene(Vector(0, 0, -5));
-  Surface sur(Color(255,0,0), 0, 0, 0);
-  scene.addShape(new Sphere(&sur, 1, 0, 0, 1));
+  Scene scene(Point(200, 200, 1000));
+  Surface sur(Color(255,0,0), 3, 0, 0);
+  scene.addShape(new Sphere(&sur, 50, 90, 320, 100));
+  Light l(Point(1200,200,1000), Color(0,255,0), 0.5);
+  scene.addLight(&l);
   Image *img = scene.render();
   img->write_png("test.png");
 }

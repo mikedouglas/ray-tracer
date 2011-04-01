@@ -15,6 +15,7 @@ public:
 Vec3 operator+(const Vec3 &a, const Vec3 &b);
 Vec3 operator-(const Vec3 &a, const Vec3 &b);
 Vec3 operator*(double a, const Vec3 &b);
+Vec3 operator*(const Vec3 &a, double b);
 Vec3 operator/(const Vec3 &a, double b);
 bool operator==(const Vec3 &a, const Vec3 &b);
 bool operator!=(const Vec3 &a, const Vec3 &b);
@@ -30,7 +31,7 @@ public:
   const Point origin;
   const Vector dir;
     
-  Ray(const Point &o, const Vector &d) : origin(o), dir(d) {}
+  Ray(const Point &origin, const Vector &dir) : origin(origin), dir(dir) {}
 };
 
 #endif

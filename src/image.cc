@@ -5,9 +5,6 @@
 #include <fstream>
 #include <png.h>
 
-#define COLOR_TO_16BIT(x) ((x.b%32) + ((x.g%32) << 6) + ((r%32) << 11))
-
-// TODO: remove
 void setRGB(png_byte *ptr, Color val)
 {
   ptr[0] = (float)val.r;
@@ -54,7 +51,7 @@ void Image::write_png(char *fname) {
   png_bytep row = (png_bytep) malloc(3 * width * sizeof(png_byte));
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j++) {
-      setRGB(&(row[j*3]), image[i*width + j]);
+      setRGB(&(row[j*3]), gamma_correct(image[i*width + j]));
     }
     png_write_row(png_ptr, row);
   }
@@ -65,5 +62,5 @@ void Image::write_png(char *fname) {
 }
 
 void Image::setColor(int x, int y, Color c) {
-  image[x*width + y] = c;
+  image[y*width + x] = c;
 }
