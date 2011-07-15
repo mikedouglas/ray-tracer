@@ -8,6 +8,11 @@
 
 int main (int argc, const char * argv[])
 {
+  if (argc < 2) {
+    std::cout << "usage: bin/example <output_file>" << std::endl;
+    return 1;
+  }
+
   Scene scene(Point(200, 200, 1000));
   Surface surr(Color(150,0,0), 8, 0.1, 0);
   Surface surb(Color(0, 0, 200), 5, 0.2, 0);
