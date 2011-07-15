@@ -58,11 +58,11 @@ TEST(scene, intersect) {
   Scene scene(Vector(0, 0, -1));
   Surface sur(Color(255,0,0), 0, 0, 0);
   Sphere a(&sur, 1, 0, 0, 1);
-  //ASSERT_EQ(scene.trace(towards), Color(0, 0, 0));
+  ASSERT_EQ(scene.trace(towards), Color(0, 0, 0));
   scene.addShape(&a);
   ASSERT_EQ(scene.trace(towards), Color(255,0,0));
   Ray away(Point(0, 0, -1), Vector(0, 0, -1));
-  //ASSERT_EQ(scene.trace(away), Color(0, 0, 0));
+  ASSERT_EQ(scene.trace(away), Color(50, 50, 50));
 }
 
 TEST(image, empty_write) {

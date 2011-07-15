@@ -24,7 +24,7 @@ double Scene::testShadow(Shape *s, Light *l, Ray lightray) {
     if (shapes[i] != s) {
       double dist = shapes[i]->intersect(lightray);
       if (dist > 0 && dist < dist_light)
-        return 0; // if it's in the shadows
+        return shapes[i]->getSurface()->transp * l->brightness; // if it's in the shadows
     }
   }
 
@@ -83,7 +83,7 @@ Color Scene::trace(const Ray &ray) {
 
 #define FAR_AWAY -500.0
 Color checkerboard(const Ray &ray) {
-  if (ray.dir.z > 0) return Color(0,0,0);
+  if (ray.dir.z > -0.9) return Color(0,0,0);
 
   Point intersect = ray.origin + ray.dir*(FAR_AWAY/ray.dir.z);
   if ((((int)intersect.x/15) + ((int)intersect.y/15)) % 2)
